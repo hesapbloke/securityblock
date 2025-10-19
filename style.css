@@ -1,0 +1,115 @@
+/* Genel ayarlar */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #fafafa;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Login kutusu */
+.login-box {
+    background: #fff;
+    border: 1px solid #dbdbdb;
+    padding: 40px 30px;
+    text-align: center;
+    width: 350px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.logo {
+    margin-bottom: 20px;
+}
+
+/* Form alanları */
+.field {
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.field input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #dbdbdb;
+    border-radius: 4px;
+    font-size: 14px;
+    background: #fafafa;
+}
+
+.login-button {
+    width: 100%;
+    padding: 10px;
+    background: #0095f6;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background 0.2s;
+}
+
+.login-button:hover {
+    background: #007acc;
+}
+
+/* Sosyal giriş */
+.fb-button {
+    display: inline-block;
+    color: #385185;
+    font-weight: bold;
+    text-decoration: none;
+    margin-top: 20px;
+}
+
+.forgot-password {
+    margin-top: 10px;
+}
+
+.forgot-password a {
+    font-size: 12px;
+    color: #00376b;
+    text-decoration: none;
+}
+
+/* Kaydol kutusu */
+.signup-box {
+    background: #fff;
+    border: 1px solid #dbdbdb;
+    padding: 20px;
+    text-align: center;
+    width: 350px;
+    font-size: 14px;
+    border-radius: 8px;
+}
+
+.signup-box a {
+    color: #0095f6;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+/* Footer */
+footer {
+    margin-top: 20px;
+    font-size: 12px;
+    color: #8e8e8e;
+    text-align: center;
+}
+
